@@ -3,9 +3,6 @@
 // esp-idf includes
 #include <esp_log.h>
 
-// 3rdparty lib includes
-#include <cleanuphelper.h>
-
 namespace {
 constexpr const char * const TAG = "ASYNCMDNS";
 } // namespace
@@ -31,7 +28,7 @@ AsyncMdnsSearch &AsyncMdnsSearch::operator=(AsyncMdnsSearch &&other)
 
 tl::expected<void, std::string> AsyncMdnsSearch::startSearch(const char *name, const char *service, const char *proto, uint16_t type, std::chrono::milliseconds timeout, size_t max_results)
 {
-    ESP_LOGI(TAG, "starting search...");
+    ESP_LOGD(TAG, "starting search...");
 
     if (searchStarted())
         return tl::make_unexpected("last scan not finished yet");
