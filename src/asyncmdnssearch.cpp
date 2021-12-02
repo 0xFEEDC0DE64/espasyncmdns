@@ -36,7 +36,7 @@ tl::expected<void, std::string> AsyncMdnsSearch::startSearch(const char *name, c
     if (!max_results)
         return tl::make_unexpected("max_results should be greater than 0");
 
-    m_mdnsScan = mdns_query_async_new(name, service, proto, type, timeout.count(), max_results);
+    m_mdnsScan = mdns_query_async_new(name, service, proto, type, timeout.count(), max_results, nullptr);
     if (!searchStarted())
         return tl::make_unexpected("mdns_query_async_new() returned invalid");
 
@@ -53,7 +53,7 @@ std::optional<AsyncMdnsResults> AsyncMdnsSearch::getResults()
 
     mdns_result_t *results{};
     uint8_t num_results{};
-    if (!mdns_query_async_get_result(m_mdnsScan, 0, &results, &num_results))
+    if (!mdns_query_async_get_results(m_mdnsScan, 0, &results, &num_results))
         return std::nullopt;
 
     deleteSearch();
