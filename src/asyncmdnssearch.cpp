@@ -26,19 +26,19 @@ AsyncMdnsSearch &AsyncMdnsSearch::operator=(AsyncMdnsSearch &&other)
     return *this;
 }
 
-tl::expected<void, std::string> AsyncMdnsSearch::startSearch(const char *name, const char *service, const char *proto, uint16_t type, std::chrono::milliseconds timeout, size_t max_results)
+std::expected<void, std::string> AsyncMdnsSearch::startSearch(const char *name, const char *service, const char *proto, uint16_t type, std::chrono::milliseconds timeout, size_t max_results)
 {
     ESP_LOGD(TAG, "starting search...");
 
     if (searchStarted())
-        return tl::make_unexpected("last scan not finished yet");
+        return std::unexpected("last scan not finished yet");
 
     if (!max_results)
-        return tl::make_unexpected("max_results should be greater than 0");
+        return std::unexpected("max_results should be greater than 0");
 
     m_mdnsScan = mdns_query_async_new(name, service, proto, type, timeout.count(), max_results, nullptr);
     if (!searchStarted())
-        return tl::make_unexpected("mdns_query_async_new() returned invalid");
+        return std::unexpected("mdns_query_async_new() returned invalid");
 
     return {};
 }

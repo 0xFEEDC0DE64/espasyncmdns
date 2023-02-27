@@ -4,12 +4,10 @@
 #include <string>
 #include <chrono>
 #include <optional>
+#include <expected>
 
 // esp-idf includes
 #include <mdns.h>
-
-// 3rdparty lib includes
-#include <tl/expected.hpp>
 
 // local includes
 #include "asyncmdnsresults.h"
@@ -27,7 +25,7 @@ public:
 
     bool searchStarted() const { return m_mdnsScan; }
 
-    tl::expected<void, std::string> startSearch(const char *name, const char *service, const char *proto, uint16_t type, std::chrono::milliseconds timeout, size_t max_results);
+    std::expected<void, std::string> startSearch(const char *name, const char *service, const char *proto, uint16_t type, std::chrono::milliseconds timeout, size_t max_results);
     std::optional<AsyncMdnsResults> getResults();
     void deleteSearch();
 
