@@ -14,7 +14,6 @@ set(dependencies
     espchrono
     espcpputils
     espwifistack
-    fmt
 )
 
 idf_component_register(
