@@ -3,9 +3,6 @@
 // esp-idf includes
 #include <mdns.h>
 
-// 3rdparty lib includes
-#include <arrayview.h>
-
 class AsyncMdnsResults
 {
     template<typename T>
